@@ -30,7 +30,7 @@ Globals:
         MAX_FILE_SIZE_BYTES: !Ref MaxFileSizeBytes
         PRESIGNED_PUT_EXPIRATION_SECONDS: "900"
         PRESIGNED_GET_EXPIRATION_SECONDS: "3600"
-        CORS_ALLOWED_ORIGINS: "http://localhost:5173"
+        CORS_ALLOWED_ORIGINS: "https://main.d2pw46kgpwxeu6.amplifyapp.com,https://d2pw46kgpwxeu6.amplifyapp.com,http://localhost:5173,*"
 
 Resources:
   ##############################################################################
@@ -58,6 +58,8 @@ Resources:
               - PUT
               - HEAD
             AllowedOrigins:
+              - "https://main.d2pw46kgpwxeu6.amplifyapp.com"
+              - "https://d2pw46kgpwxeu6.amplifyapp.com"
               - "http://localhost:5173"
               - "*"
             ExposedHeaders:
@@ -168,6 +170,8 @@ Resources:
       StageName: "$default"
       CorsConfiguration:
         AllowOrigins:
+          - "https://main.d2pw46kgpwxeu6.amplifyapp.com"
+          - "https://d2pw46kgpwxeu6.amplifyapp.com"
           - "http://localhost:5173"
         AllowHeaders:
           - Content-Type

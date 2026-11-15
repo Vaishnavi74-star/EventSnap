@@ -1,5 +1,15 @@
+import sys
+import os
+import types
+
+# Ensure 'src' package resolves cleanly when Lambda executes with CodeUri: ../src/
+if "src" not in sys.modules:
+    _src_pkg = types.ModuleType("src")
+    _src_pkg.__path__ = [os.path.dirname(os.path.abspath(__file__))]
+    sys.modules["src"] = _src_pkg
+
 import re
-from typing import Dict, Any, Callable
+from typing import Dict, Any, Callable, Optional
 from src.handlers.events_handler import (
     handle_create_event,
     handle_list_events,
@@ -82,8 +92,6 @@ def match_route(method: str, path: str) -> tuple[Optional[Callable], Dict[str, s
 
     return None, {}
 
-
-from typing import Optional
 
 def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """

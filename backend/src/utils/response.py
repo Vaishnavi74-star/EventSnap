@@ -18,9 +18,20 @@ class CustomJSONEncoder(json.JSONEncoder):
         return super().default(obj)
 
 
-def get_cors_headers() -> Dict[str, str]:
+def get_cors_headers(origin: Optional[str] = None) -> Dict[str, str]:
+    allowed_str = config.CORS_ALLOWED_ORIGINS
+    origins_list = [o.strip() for o in allowed_str.split(",") if o.strip()]
+    
+    selected_origin = "*"
+    if "*" in origins_list:
+        selected_origin = "*"
+    elif origin and origin in origins_list:
+        selected_origin = origin
+    elif origins_list:
+        selected_origin = origins_list[0]
+
     return {
-        "Access-Control-Allow-Origin": config.CORS_ALLOWED_ORIGINS,
+        "Access-Control-Allow-Origin": selected_origin,
         "Access-Control-Allow-Headers": config.CORS_ALLOWED_HEADERS,
         "Access-Control-Allow-Methods": config.CORS_ALLOWED_METHODS,
         "Content-Type": "application/json",
