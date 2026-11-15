@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/34874097/README.md)
+
 # EventSnap 📸
 
 **One event. One QR code. Everyone's memories.**
