@@ -5,14 +5,20 @@ from typing import Optional, Tuple
 from src.config import config
 from src.utils.logger import logger
 
-# Configure boto3 S3 client with standard signature v4
+# Configure boto3 S3 client with standard signature v4 and regional endpoint
 _boto_config = BotoConfig(
     signature_version="s3v4",
     region_name=config.AWS_REGION,
     retries={"max_attempts": 3, "mode": "standard"},
+    s3={"addressing_style": "virtual"},
 )
 
-s3_client = boto3.client("s3", config=_boto_config)
+s3_client = boto3.client(
+    "s3",
+    region_name=config.AWS_REGION,
+    endpoint_url=f"https://s3.{config.AWS_REGION}.amazonaws.com",
+    config=_boto_config,
+)
 
 
 def generate_presigned_put_url(
